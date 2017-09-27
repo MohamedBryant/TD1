@@ -1,0 +1,23 @@
+<?php
+function wim2a_menu() {
+    $items['wim2a/page1/%'] = array(
+        'page callback' => 'wim2a_page1',
+        'access callback' => true,
+    );
+    return $items;
+}
+
+function wim2a_page1($arg='none') {
+    $outputs['arg'] = $arg;
+    $outputs['request_uri'] = $_SERVER['REQUEST_URI'];
+    $outputs['query_string'] = $_SERVER['QUERY_STRING'];
+    $outputs['path_info'] = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO']
+    : 'non d�fini';
+    $outputs['script_name'] = $_SERVER['SCRIPT_NAME'];
+    $str = '';
+    foreach($outputs as $key => $value) {
+        $str .= $key . '<br>' . $value . '<br><br>';
+    }
+    return $str;
+}
+?>

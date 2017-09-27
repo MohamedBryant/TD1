@@ -1,0 +1,5 @@
+name = module1
+description = La page 1.
+core = 7.x
+package = Module WIM2
+files[] = wim2a.module
