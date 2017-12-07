@@ -1,0 +1,24 @@
+<?php
+function module_test_schema() {
+	$schema['contact'] = array(
+	  'description' => 'Phase de description contact.',
+	  'fields' => array(
+	    'cid' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+		'nom' => array('type' => 'varchar', 'length' => 120, 'not null' => TRUE, 'default' => ''),
+		'prenom' => array('type' => 'varchar', 'length' => 120, 'not null' => TRUE, 'default' => ''),
+		'adresse' =>array('type' => 'varchar', 'length' => 120, 'not null' => TRUE, 'default' => ''),
+		'telephone' => array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+		'email' => array('type' => 'varchar', 'not null' => TRUE, 'default' => 0)
+		),
+		'status' => array('type' => 'int', 'not null' => TRUE, 'default' => 1
+		),
+		'indexes' => array(
+		  'cid' => array('cid'),
+		),
+		'foreign keys' => array(
+		  'author' => array('table' => 'contact', 'columns' => array('cid' => 'cid'),),
+		),
+		'primary key' => array('cid'),
+	  );
+	  return $schema ;
+}
