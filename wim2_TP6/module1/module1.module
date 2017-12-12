@@ -4,7 +4,7 @@
 */
 
 //require ("DAL.php");
- 
+
 function module1_menu() {
 $items = array();
 
@@ -86,7 +86,7 @@ $dal = new DAL($config);
 $tab = array(
 	'contact1' => array(
 		'cid' => '4',
-		'nom' => 'nom1', 
+		'nom' => 'nom1',
 		'prenom' => 'prenom1',
 		'adresse' => 'adresse1',
 		'telephone' => 0612345678,
