@@ -1,0 +1,5 @@
+name = Contact
+description = Création d'un formulaire pour la getion de contacts.
+core = 7.x
+package = Module_Commercial
+files[] = commercial.module

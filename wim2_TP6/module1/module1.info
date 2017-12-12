@@ -1,7 +1,0 @@
-name = Really Neat Widget 
-description = Module 1 relier le site à une base de donnée externe. 
-core = 7.x 
-package = modules
-files[] = modules1.module
-files[] = DAL.php
-files[] = modules1.install

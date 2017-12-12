@@ -1,0 +1,205 @@
+<?php
+/**
+* implements hook_menu
+*/
+
+function commercial_menu(){
+    
+    $item['commercial/afficher'] = array(
+        'title' => 'Afficher',
+        'page callback' => 'commercial_afficher',
+        'access callback' => TRUE,
+    );
+
+    $item['commercial/creer'] = array(
+        'title' => 'Creer',
+	    'page callback' => 'drupal_get_form',
+	    'page arguments' => array('commercial_show_form'),
+        'access callback' => TRUE,
+
+    );
+
+    $item['commercial/modifier'] = array(
+        'title' => 'Modifier',
+        'page callback' => 'commercial_modifier',
+        'access callback' => TRUE,
+    );
+
+    $item['commercial/supprimer'] = array(
+        'title' => 'Supprimer',
+        'page callback' => 'commercial_supprimer',
+        'access callback' => TRUE,
+    );
+	
+	$item['commercial/testdalselect'] = array(
+	'title' => 'testdalselect',
+	'page callback' => 'commercial_testdalselect',
+	'access callback' => TRUE,
+	);
+
+	$item['commercial/testdaldelete'] = array(
+	'title' => 'testdaldelete',
+	'page callback' => 'commercial_testdaldelete',
+	'access callback' => TRUE,
+	);
+
+	$item['commercial/testbl'] = array(
+	'title' => 'testbl',
+	'page callback' => 'commercial_testbl',
+	'access callback' => TRUE,
+	);
+    return $item;
+}
+
+function commercial_afficher($arg='none'){
+   
+    $config = array(
+        'db' => 'drupal-elg-mohamed',
+        'table' => 'contact',
+        'idKey' => 'cid',
+        'autoIncrement' => TRUE,
+        'defaultOrder' => array('nom => asc'),
+        'rowClass' => 'stdClass',
+    );
+    require_once('DAO.php');
+    $dao = new DAO($config); 
+
+    $result = (array) ($dao->load());
+    return (array(
+		'#theme'=>'table',
+		'#header'=>array_keys($result[0]),
+		'#rows'=>$result,
+		)
+	);
+}
+
+function commercial_show_form_submit($form, &$form_state){
+ 
+    $config = array(
+      'db' => 'drupal-elg-mohamed',
+      'table' => 'contact',
+      'idKey' => 'cid',
+      'autoIncrement' => TRUE,
+      'defaultOrder' => array('nom' => 'asc'),
+      'rowClass' => 'stdClass',
+    ); 
+    require_once('DAO.php');
+    $dao = new DAO($config);
+
+	$obj = new stdClass();
+    $obj->nom = $form_state['values']['nom'];
+	$obj->prenom = $form_state['values']['prenom'];
+	$obj->adresse = $form_state['values']['adresse'];
+	$obj->telephone = $form_state['values']['telephone'];
+	$obj->email = $form_state['values']['email'];
+    $dao->insert($obj);
+    drupal_set_message('Vos données ont bien été enregistrées');
+
+
+}
+
+function commercial_modifier($arg='none'){
+
+    return 'modifier';
+}
+
+function commercial_supprimer($arg='none'){
+
+    return 'supprimer';
+}
+
+function commercial_show_form($form, &$form_state) {
+	  
+      $form['nom'] = array (
+		'#type' => 'textfield',
+		'#title' => 'Nom :',
+		'#name' => 'nom',
+	);
+	  $form['prenom'] = array(
+		'#type' => 'textfield',
+		'#title' => 'Prenom :',
+		'#name' => 'prenom',
+	);
+	 $form['adresse'] = array(
+		'#type' => 'textfield',
+		'#title' => 'Adresse :',
+		'#name' => 'adresse',
+	);
+	   $form['telephone'] = array(
+		'#type' => 'textfield',
+		'#title' => 'Telephone :',
+		'#name' => 'telephone',
+	);
+	  $form['email'] = array(
+		'#type' => 'textfield',
+		'#title' => 'Email :',
+		'#name' => 'email',
+	);  
+	  $form['go'] = array(
+		'#type' => 'submit',
+		'#value' => 'valider',
+	);
+	  
+	return $form;
+}
+	
+function commercial_show_form_validate($form, &$form_state){
+		if ($form_state['values']['nom'] == '')
+		{
+			form_set_error('nom', t('Vous devez saisir un nom.' ));
+		}
+		if ($form_state['values']['prenom'] == '')
+		{
+			form_set_error('prenom', t('Vous devez saisir un prénom.' ));
+		}
+		if ($form_state['values']['adresse'] == '')
+		{
+			form_set_error('adresse', t('Vous devez saisir un adresse.' ));
+		}
+		if ($form_state['values']['telephone'] == '')
+		{
+			form_set_error('telephone', t('Vous devez saisir un telephone.' ));
+		}
+		if ($form_state['values']['email'] == '')
+		{
+			form_set_error('email', t('Vous devez saisir un email.' ));
+		}
+}
+
+function commercial_testdalselect() {
+	$config = array(
+      'db' => 'drupal-elg-mohamed',
+      'table' => 'contact',
+      'idKey' => 'cid',
+      'autoIncrement' => TRUE,
+      'defaultOrder' => array('nom' => 'asc'),
+      'rowClass' => 'stdClass',
+    ); 
+    require_once('DAO.php');
+    $dao = new DAO($config);
+$vars = 'Test de selection de contact avec un objet DAL';
+
+return $vars;
+}
+
+function commercial_testdaldelete() {
+	$config = array(
+      'db' => 'drupal-elg-mohamed',
+      'table' => 'contact',
+      'idKey' => 'cid',
+      'autoIncrement' => TRUE,
+      'defaultOrder' => array('nom' => 'asc'),
+      'rowClass' => 'stdClass',
+    ); 
+    require_once('DAO.php');
+    $dao = new DAO($config);
+$vars = 'Test de suppression de contact avec un objet DAL';
+
+return $vars;
+}
+
+function commercial_testbl() {
+$vars = 'Test de mes objets métiers';
+
+return $vars;
+}
